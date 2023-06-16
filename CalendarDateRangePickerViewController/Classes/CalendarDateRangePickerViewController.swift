@@ -266,6 +266,8 @@ extension CalendarDateRangePickerViewController {
                 }
             }
         }
+        
+        cell.configureAccessibility()
         return cell
     }
 
@@ -275,6 +277,7 @@ extension CalendarDateRangePickerViewController {
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerReuseIdentifier, for: indexPath) as! CalendarDateRangePickerHeaderView
             headerView.label.text = getMonthLabel(date: getFirstDateForSection(section: indexPath.section))
             headerView.font = headerFont
+            headerView.accessibilityTraits = .header
             return headerView
         default:
             fatalError("Unexpected element kind")

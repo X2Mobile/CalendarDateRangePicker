@@ -58,6 +58,7 @@ class CalendarDateRangePickerCell: UICollectionViewCell {
         self.backgroundColor = UIColor.clear
         label.textColor = defaultTextColor
         label.backgroundColor = UIColor.clear
+        date = nil
         if selectedView != nil {
             selectedView?.removeFromSuperview()
             selectedView = nil
@@ -86,6 +87,16 @@ class CalendarDateRangePickerCell: UICollectionViewCell {
         label.font = highlightedFont
         self.addSubview(selectedView!)
         self.sendSubviewToBack(selectedView!)
+        
+        if UIAccessibility.isVoiceOverRunning {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else {
+                    return
+                }
+                
+                UIAccessibility.post(notification: .screenChanged, argument: self.label)
+            }
+        }
     }
 
     @objc func highlightRight() {
@@ -144,5 +155,39 @@ class CalendarDateRangePickerCell: UICollectionViewCell {
         todayView?.layer.cornerRadius = height / 2
         self.addSubview(todayView!)
         self.sendSubviewToBack(todayView!)
+    }
+    
+    func configureAccessibility() {
+        guard let date else {
+            label.isAccessibilityElement = false
+            return
+        }
+        
+        let calendar = Calendar.current
+        
+        let dayOfWeek = calendar.component(.weekday, from: date)
+        let weekDay = calendar.weekdaySymbols[dayOfWeek - 1]
+
+        let day = calendar.component(.day, from: date)
+        
+        let monthSymbol = calendar.component(.month, from: date)
+        let month = calendar.monthSymbols[monthSymbol - 1]
+
+        let year = calendar.component(.year, from: date)
+
+        label.isAccessibilityElement = true
+        label.accessibilityLabel = "\(weekDay) \(day) \(month) \(year)"
+        label.accessibilityValue = label.font == highlightedFont ? Constants.selected : Constants.notSelected
+        label.accessibilityHint = Constants.hint
+    }
+}
+
+// MARK: - Constants
+
+extension CalendarDateRangePickerCell {
+    private enum Constants {
+        static let selected = "Selected"
+        static let notSelected = "Not Selected"
+        static let hint = "Double tap to choose the week that contains this date"
     }
 }

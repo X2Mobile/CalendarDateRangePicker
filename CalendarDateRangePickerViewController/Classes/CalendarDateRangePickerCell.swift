@@ -186,7 +186,7 @@ class CalendarDateRangePickerCell: UICollectionViewCell {
 
 extension CalendarDateRangePickerCell {
     private enum Constants {
-        static let selected = "Salected"
+        static let selected = "Selected"
         static let notSelected = "Not Selected"
         static let hint = "Double tap to choose the week that contains this date"
     }

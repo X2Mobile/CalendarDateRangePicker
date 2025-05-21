@@ -178,13 +178,13 @@ extension CalendarDateRangePickerViewController {
                 cell.disable()
             }
 
-            if self.nowDatePreFormatted == datePreFormatted {
-                cell.todaySelectedColor = cell.getPreferredColor(self.todaySelectedColor,
-                                                                 accessibilityColor:
-                                                                    selectedStartDate != nil &&
-                                                                 selectedEndDate != nil &&
-                                                                 isBefore(dateA: selectedStartDate!, dateB: date) &&
-                                                                 isBefore(dateA: date, dateB: selectedEndDate!) ? .white : .black)
+            if self.nowDatePreFormatted == datePreFormatted{
+                cell.todaySelectedColor = UIAccessibility.isDarkerSystemColorsEnabled ?
+                (selectedStartDate != nil &&
+                 selectedEndDate != nil &&
+                 isBefore(dateA: selectedStartDate!, dateB: date) &&
+                 isBefore(dateA: date, dateB: selectedEndDate!) ? .white : .black) :
+                self.todaySelectedColor
                 cell.selectToday()
             }
 

@@ -178,7 +178,13 @@ extension CalendarDateRangePickerViewController {
                 cell.disable()
             }
 
-            if self.nowDatePreFormatted == datePreFormatted{
+            if self.nowDatePreFormatted == datePreFormatted {
+                cell.todaySelectedColor = cell.getPreferredColor(self.todaySelectedColor,
+                                                                 accessibilityColor:
+                                                                    selectedStartDate != nil &&
+                                                                 selectedEndDate != nil &&
+                                                                 isBefore(dateA: selectedStartDate!, dateB: date) &&
+                                                                 isBefore(dateA: date, dateB: selectedEndDate!) ? .white : .black)
                 cell.selectToday()
             }
 
@@ -283,7 +289,6 @@ extension CalendarDateRangePickerViewController {
             fatalError("Unexpected element kind")
         }
     }
-
 }
 
 extension CalendarDateRangePickerViewController: UICollectionViewDelegateFlowLayout {

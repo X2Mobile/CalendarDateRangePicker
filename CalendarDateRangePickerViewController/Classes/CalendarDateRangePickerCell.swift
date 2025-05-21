@@ -137,7 +137,7 @@ class CalendarDateRangePickerCell: UICollectionViewCell {
     }
 
     @objc func setBlackBoldFont() {
-        label.textColor = .black
+        label.textColor = getPreferredColor(.black, accessibilityColor: .white)
         label.font = highlightedFont
     }
 
@@ -191,3 +191,13 @@ extension CalendarDateRangePickerCell {
         static let hint = "Double tap to choose the week that contains this date"
     }
 }
+
+// MARK: - Accessibility
+
+ extension CalendarDateRangePickerCell {
+     public func getPreferredColor(_ color: UIColor, accessibilityColor: UIColor) -> UIColor {
+         return UIColor { _ in
+             return UIAccessibility.isDarkerSystemColorsEnabled ? accessibilityColor : color
+         }
+     }
+ }

@@ -137,7 +137,7 @@ class CalendarDateRangePickerCell: UICollectionViewCell {
     }
 
     @objc func setBlackBoldFont() {
-        label.textColor = .black
+        label.textColor =  UIAccessibility.isDarkerSystemColorsEnabled ? .white : .black
         label.font = highlightedFont
     }
 
